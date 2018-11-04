@@ -18,9 +18,3 @@ You can also install `include/pqrs` by using [cget](https://github.com/pfultz2/c
 ```shell
 cget install pqrs-org/cpp-osx-cf_ptr@v1.0.0 --cmake header
 ```
-
-## Usage
-
-```cpp
-
-```
