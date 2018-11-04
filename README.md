@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/pqrs-org/cpp-thread_wait.svg?branch=master)](https://travis-ci.org/pqrs-org/cpp-thread_wait)
-[![License](https://img.shields.io/badge/license-Boost%20Software%20License-blue.svg)](https://github.com/pqrs-org/cpp-thread-wait/blob/master/LICENSE.md)
+[![Build Status](https://travis-ci.org/pqrs-org/cpp-osx-cf_ptr.svg?branch=master)](https://travis-ci.org/pqrs-org/cpp-osx-cf_ptr)
+[![License](https://img.shields.io/badge/license-Boost%20Software%20License-blue.svg)](https://github.com/pqrs-org/cpp-osx-cf_ptr/blob/master/LICENSE.md)
 
 # cpp-osx-cf_ptr
 
@@ -22,4 +22,5 @@ cget install pqrs-org/cpp-osx-cf_ptr@v1.0.0 --cmake header
 ## Usage
 
 ```cpp
+
 ```
