@@ -16,5 +16,5 @@ Copy `include/pqrs` directory into your include directory.
 You can also install `include/pqrs` by using [cget](https://github.com/pfultz2/cget).
 
 ```shell
-cget install pqrs-org/cpp-osx-cf_ptr@v1.1.0 --cmake header
+cget install pqrs-org/cpp-osx-cf_ptr@v1.2.0 --cmake header
 ```
