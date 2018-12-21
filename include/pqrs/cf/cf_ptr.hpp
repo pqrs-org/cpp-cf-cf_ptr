@@ -1,6 +1,6 @@
 #pragma once
 
-// pqrs::cf_ptr v1.4
+// pqrs::cf::cf_ptr v1.4
 
 // (C) Copyright Takayama Fumihiko 2018.
 // Distributed under the Boost Software License, Version 1.0.
@@ -9,6 +9,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 
 namespace pqrs {
+namespace cf {
 template <typename T>
 class cf_ptr final {
 public:
@@ -74,4 +75,5 @@ public:
 private:
   T _Nullable p_;
 };
+} // namespace cf
 } // namespace pqrs

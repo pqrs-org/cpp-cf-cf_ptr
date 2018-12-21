@@ -1,9 +1,9 @@
 #include <iostream>
-#include <pqrs/cf_ptr.hpp>
+#include <pqrs/cf/cf_ptr.hpp>
 
 int main(void) {
   {
-    pqrs::cf_ptr<CFStringRef> p;
+    pqrs::cf::cf_ptr<CFStringRef> p;
 
     if (auto string = CFStringCreateWithCString(kCFAllocatorDefault,
                                                 "example",
