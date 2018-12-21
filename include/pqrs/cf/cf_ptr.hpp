@@ -1,6 +1,6 @@
 #pragma once
 
-// pqrs::cf::cf_ptr v1.4
+// pqrs::cf::cf_ptr v2.0
 
 // (C) Copyright Takayama Fumihiko 2018.
 // Distributed under the Boost Software License, Version 1.0.
