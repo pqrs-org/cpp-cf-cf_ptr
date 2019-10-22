@@ -55,14 +55,6 @@ TEST_CASE("cf_ptr") {
     pqrs::cf::cf_ptr<CFStringRef> ptr1(cfstring1);
     REQUIRE(CFGetRetainCount(cfstring1) == 2);
 
-    ptr1 = ptr1;
-    REQUIRE(CFGetRetainCount(cfstring1) == 2);
-  }
-
-  {
-    pqrs::cf::cf_ptr<CFStringRef> ptr1(cfstring1);
-    REQUIRE(CFGetRetainCount(cfstring1) == 2);
-
     pqrs::cf::cf_ptr<CFStringRef> ptr1_1(ptr1);
     REQUIRE(CFGetRetainCount(cfstring1) == 3);
 
