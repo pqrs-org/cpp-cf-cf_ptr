@@ -1,67 +1,70 @@
-#define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
-
+#include <boost/ut.hpp>
 #include <pqrs/cf/cf_ptr.hpp>
 
-TEST_CASE("cf_ptr") {
-  auto cfstring1 = CFStringCreateWithCString(kCFAllocatorDefault, "cfstring1", kCFStringEncodingUTF8);
-  auto cfstring2 = CFStringCreateWithCString(kCFAllocatorDefault, "cfstring2", kCFStringEncodingUTF8);
-  REQUIRE(CFGetRetainCount(cfstring1) == 1);
-  REQUIRE(CFGetRetainCount(cfstring2) == 1);
+int main(void) {
+  using namespace boost::ut;
+  using namespace boost::ut::literals;
 
-  {
-    pqrs::cf::cf_ptr<CFStringRef> ptr1(cfstring1);
-    REQUIRE(CFGetRetainCount(cfstring1) == 2);
-    REQUIRE(ptr1 == true);
+  "cf_ptr"_test = [] {
+    auto cfstring1 = CFStringCreateWithCString(kCFAllocatorDefault, "cfstring1", kCFStringEncodingUTF8);
+    auto cfstring2 = CFStringCreateWithCString(kCFAllocatorDefault, "cfstring2", kCFStringEncodingUTF8);
+    expect(CFGetRetainCount(cfstring1) == 1);
+    expect(CFGetRetainCount(cfstring2) == 1);
 
-    REQUIRE(CFGetRetainCount(ptr1.get()) == 2);
-    REQUIRE(CFGetRetainCount(*ptr1) == 2);
+    {
+      pqrs::cf::cf_ptr<CFStringRef> ptr1(cfstring1);
+      expect(CFGetRetainCount(cfstring1) == 2);
+      expect(ptr1 == true);
 
-    ptr1.reset();
-    REQUIRE(CFGetRetainCount(cfstring1) == 1);
-    REQUIRE(ptr1 == false);
-  }
+      expect(CFGetRetainCount(ptr1.get()) == 2);
+      expect(CFGetRetainCount(*ptr1) == 2);
 
-  REQUIRE(CFGetRetainCount(cfstring1) == 1);
+      ptr1.reset();
+      expect(CFGetRetainCount(cfstring1) == 1);
+      expect(ptr1 == false);
+    }
 
-  {
-    pqrs::cf::cf_ptr<CFStringRef> ptr1(cfstring1);
-    REQUIRE(CFGetRetainCount(cfstring1) == 2);
+    expect(CFGetRetainCount(cfstring1) == 1);
 
-    ptr1 = nullptr;
-    REQUIRE(CFGetRetainCount(cfstring1) == 1);
-  }
+    {
+      pqrs::cf::cf_ptr<CFStringRef> ptr1(cfstring1);
+      expect(CFGetRetainCount(cfstring1) == 2);
 
-  {
-    pqrs::cf::cf_ptr<CFStringRef> ptr1(cfstring1);
-    REQUIRE(CFGetRetainCount(cfstring1) == 2);
-    pqrs::cf::cf_ptr<CFStringRef> ptr2(cfstring2);
-    REQUIRE(CFGetRetainCount(cfstring2) == 2);
+      ptr1 = nullptr;
+      expect(CFGetRetainCount(cfstring1) == 1);
+    }
 
-    ptr1 = ptr2;
-    REQUIRE(CFGetRetainCount(cfstring1) == 1);
-    REQUIRE(CFGetRetainCount(cfstring2) == 3);
+    {
+      pqrs::cf::cf_ptr<CFStringRef> ptr1(cfstring1);
+      expect(CFGetRetainCount(cfstring1) == 2);
+      pqrs::cf::cf_ptr<CFStringRef> ptr2(cfstring2);
+      expect(CFGetRetainCount(cfstring2) == 2);
 
-    ptr1 = nullptr;
-    REQUIRE(CFGetRetainCount(cfstring1) == 1);
-    REQUIRE(CFGetRetainCount(cfstring2) == 2);
+      ptr1 = ptr2;
+      expect(CFGetRetainCount(cfstring1) == 1);
+      expect(CFGetRetainCount(cfstring2) == 3);
 
-    ptr2 = nullptr;
-    REQUIRE(CFGetRetainCount(cfstring1) == 1);
-    REQUIRE(CFGetRetainCount(cfstring2) == 1);
-  }
+      ptr1 = nullptr;
+      expect(CFGetRetainCount(cfstring1) == 1);
+      expect(CFGetRetainCount(cfstring2) == 2);
 
-  {
-    pqrs::cf::cf_ptr<CFStringRef> ptr1(cfstring1);
-    REQUIRE(CFGetRetainCount(cfstring1) == 2);
+      ptr2 = nullptr;
+      expect(CFGetRetainCount(cfstring1) == 1);
+      expect(CFGetRetainCount(cfstring2) == 1);
+    }
 
-    pqrs::cf::cf_ptr<CFStringRef> ptr1_1(ptr1);
-    REQUIRE(CFGetRetainCount(cfstring1) == 3);
+    {
+      pqrs::cf::cf_ptr<CFStringRef> ptr1(cfstring1);
+      expect(CFGetRetainCount(cfstring1) == 2);
 
-    ptr1 = nullptr;
-    REQUIRE(CFGetRetainCount(cfstring1) == 2);
+      pqrs::cf::cf_ptr<CFStringRef> ptr1_1(ptr1);
+      expect(CFGetRetainCount(cfstring1) == 3);
 
-    ptr1_1 = nullptr;
-    REQUIRE(CFGetRetainCount(cfstring1) == 1);
-  }
+      ptr1 = nullptr;
+      expect(CFGetRetainCount(cfstring1) == 2);
+
+      ptr1_1 = nullptr;
+      expect(CFGetRetainCount(cfstring1) == 1);
+    }
+  };
 }
