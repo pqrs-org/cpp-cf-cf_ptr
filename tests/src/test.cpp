@@ -67,4 +67,6 @@ int main(void) {
       expect(CFGetRetainCount(cfstring1) == 1);
     }
   };
+
+  return 0;
 }
