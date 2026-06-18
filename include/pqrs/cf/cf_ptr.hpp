@@ -11,6 +11,12 @@
 
 namespace pqrs::cf {
 template <typename T>
+class cf_ptr;
+
+template <typename T>
+cf_ptr<T> adopt_cf_ptr(T _Nullable p) noexcept;
+
+template <typename T>
 class cf_ptr final {
 public:
   cf_ptr() noexcept : cf_ptr(nullptr) {
@@ -85,6 +91,20 @@ public:
   }
 
 private:
+  struct adopt_tag final {
+  };
+
+  cf_ptr(T _Nullable p, adopt_tag) noexcept : p_(p) {
+  }
+
+  template <typename U>
+  friend cf_ptr<U> adopt_cf_ptr(U) noexcept;
+
   T _Nullable p_;
 };
+
+template <typename T>
+cf_ptr<T> adopt_cf_ptr(T _Nullable p) noexcept {
+  return cf_ptr<T>(p, typename cf_ptr<T>::adopt_tag{});
+}
 } // namespace pqrs::cf

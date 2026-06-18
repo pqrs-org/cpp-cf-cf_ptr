@@ -31,6 +31,18 @@ int main() {
     expect(CFGetRetainCount(cf1) == 1_l);
 
     {
+      // adopt takes ownership of an already-retained Create/Copy result without retaining it again.
+      auto cf3 = CFDictionaryCreate(kCFAllocatorDefault, nullptr, nullptr, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+      expect(CFGetRetainCount(cf3) == 1_l);
+
+      auto ptr1 = pqrs::cf::adopt_cf_ptr(cf3);
+      expect(ptr1 == true);
+      expect(CFGetRetainCount(cf3) == 1_l);
+
+      ptr1.reset();
+    }
+
+    {
       // Assigning nullptr releases the currently retained object.
       pqrs::cf::cf_ptr<CFDictionaryRef> ptr1(cf1);
       expect(CFGetRetainCount(cf1) == 2_l);

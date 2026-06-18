@@ -13,10 +13,8 @@ int main() {
                                              &kCFTypeDictionaryValueCallBacks)) {
       std::cout << CFGetRetainCount(dictionary) << std::endl; // retain count == 1
 
-      p = dictionary;
-      std::cout << CFGetRetainCount(dictionary) << std::endl; // retain count == 2
-
-      CFRelease(dictionary); // retain count == 1
+      p = pqrs::cf::adopt_cf_ptr(dictionary);
+      std::cout << CFGetRetainCount(*p) << std::endl; // retain count == 1
     }
 
     if (p) {
