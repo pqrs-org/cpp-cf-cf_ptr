@@ -1,20 +1,28 @@
 #include <iostream>
 #include <pqrs/cf/cf_ptr.hpp>
 
-int main(void) {
+int main() {
   {
-    pqrs::cf::cf_ptr<CFStringRef> p;
+    pqrs::cf::cf_ptr<CFDictionaryRef> p;
 
-    if (auto string = CFStringCreateWithCString(kCFAllocatorDefault,
-                                                "example",
-                                                kCFStringEncodingUTF8)) {
-      p = string;
+    if (auto dictionary = CFDictionaryCreate(kCFAllocatorDefault,
+                                             nullptr,
+                                             nullptr,
+                                             0,
+                                             &kCFTypeDictionaryKeyCallBacks,
+                                             &kCFTypeDictionaryValueCallBacks)) {
+      std::cout << CFGetRetainCount(dictionary) << std::endl; // retain count == 1
 
-      CFRelease(string);
+      p = dictionary;
+      std::cout << CFGetRetainCount(dictionary) << std::endl; // retain count == 2
+
+      CFRelease(dictionary); // retain count == 1
     }
 
-    std::cout << CFGetRetainCount(*p) << std::endl; // CFGetRetainCount(*p) == 1
-    std::cout << CFStringGetCStringPtr(*p, kCFStringEncodingUTF8) << std::endl;
+    if (p) {
+      std::cout << CFDictionaryGetCount(*p) << std::endl;
+      std::cout << CFGetRetainCount(*p) << std::endl; // retain count == 1
+    }
   }
 
   return 0;
