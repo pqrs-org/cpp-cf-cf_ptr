@@ -117,6 +117,23 @@ int main() {
       expect(CFGetRetainCount(cf1) == 2_l);
     }
 
+    {
+      // equal compares CF values and handles null pointers without calling CFEqual.
+      pqrs::cf::cf_ptr<CFDictionaryRef> null1;
+      pqrs::cf::cf_ptr<CFDictionaryRef> null2;
+      expect(pqrs::cf::equal(null1, null2) == true);
+
+      pqrs::cf::cf_ptr<CFDictionaryRef> ptr1(cf1);
+      pqrs::cf::cf_ptr<CFDictionaryRef> ptr2(cf2);
+      expect(pqrs::cf::equal(null1, ptr1) == false);
+      expect(pqrs::cf::equal(ptr1, null1) == false);
+      expect(pqrs::cf::equal(ptr1, ptr2) == true);
+
+      auto string = CFSTR("hello");
+      pqrs::cf::cf_ptr<CFStringRef> ptr3(string);
+      expect(pqrs::cf::equal(ptr1, ptr3) == false);
+    }
+
     CFRelease(cf1);
     CFRelease(cf2);
   };

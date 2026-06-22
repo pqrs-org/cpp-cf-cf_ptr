@@ -107,4 +107,17 @@ template <typename T>
 cf_ptr<T> adopt_cf_ptr(T _Nullable p) noexcept {
   return cf_ptr<T>(p, typename cf_ptr<T>::adopt_tag{});
 }
+
+template <typename T, typename U>
+bool equal(const cf_ptr<T>& a, const cf_ptr<U>& b) noexcept {
+  if (!a && !b) {
+    return true;
+  }
+
+  if (!a || !b) {
+    return false;
+  }
+
+  return CFEqual(a.get(), b.get());
+}
 } // namespace pqrs::cf
